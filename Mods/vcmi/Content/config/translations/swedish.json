@@ -1126,6 +1126,7 @@
 	"vcmi.server.errors.campOrMapFile.unknownEntity": "Kunde inte ladda fil! Okänd entitet '%s' hittades! Filen kanske inte är kompatibel med den för närvarande installerade moddversionen!",
 	"vcmi.server.errors.disconnected": "{Nätverksfel}\n\nAnslutningen till spelservern avbröts!",
 	"vcmi.server.errors.existingProcess": "En annan server-process i VCMI körs, vänligen avsluta den först.",
+	"vcmi.server.errors.incompatibleVersion": "{Inkompatibel version}\n\nSpelservern använder en version av VCMI som inte är kompatibel med din version!",
 	"vcmi.server.errors.modsToDisable": "{Följande moddar måste avaktiveras}",
 	"vcmi.server.errors.modsToEnable": "{Nödvändiga moddar för att spela}",
 	"vcmi.server.errors.notAllowed": "Du får inte utföra denna åtgärd!",
