@@ -112,6 +112,26 @@ void ObjectManager::updateDistances(const rmg::Object & obj)
 	});
 }
 
+void ObjectManager::addFootprint(const rmg::Object & obj)
+{
+	const auto footprint = obj.getFootprint();
+	std::lock_guard lock(footprintMutex);
+	objectsFootprint.unite(footprint);
+	if(obj.hasMultipleEntrances())
+		multiEntranceFootprint.unite(footprint);
+}
+
+bool ObjectManager::keepsFootprintDistance(const rmg::Object & candidate, float minDistance) const
+{
+	const bool candidateHasMultipleEntrances = candidate.hasMultipleEntrances();
+	std::lock_guard lock(footprintMutex);
+	if(!candidateHasMultipleEntrances && multiEntranceFootprint.empty())
+		return true;
+
+	const auto footprint = candidate.getFootprint();
+	return footprintKeepsDistance(footprint, candidateHasMultipleEntrances ? objectsFootprint : multiEntranceFootprint, minDistance);
+}
+
 void ObjectManager::updateDistances(const int3 & pos)
 {
 	updateDistances([pos](const int3& tile) -> ui32
@@ -179,7 +199,7 @@ int3 ObjectManager::findPlaceForObject(const rmg::Area & searchArea, rmg::Object
 				return true;
 			}
 		}
-		return false;
+		return !obj.allEntrancesOnMap([this](const int3 & tile) { return map.isOnMap(tile); });
 	};
 	
 	if(optimizer & OptimizeType::DISTANCE)
@@ -258,6 +278,9 @@ int3 ObjectManager::findPlaceForObject(const rmg::Area & searchArea, rmg::Object
 		if(dist < min_dist)
 			return -1.f;
 
+		if(!keepsFootprintDistance(obj, min_dist))
+			return -1.f;
+
 		for(const auto & t : obj.getArea().getTilesVector())
 		{
 			auto localDist = map.getTileInfo(t).getNearestObjectDistance();
@@ -288,6 +311,9 @@ rmg::Path ObjectManager::placeAndConnectObject(const rmg::Area & searchArea, rmg
 			else
 				vstd::amin(bestDistance, distance);
 		}
+
+		if(!keepsFootprintDistance(obj, min_dist))
+			return -1.f;
 		
 		rmg::Area perimeter;
 		rmg::Area areaToBlock;
@@ -617,6 +643,8 @@ void ObjectManager::placeObject(rmg::Object & object, bool guarded, bool updateD
 		}
 	}
 
+	addFootprint(object);
+
 	if (updateDistance)
 	{
 		//Update distances in every adjacent zone (including this one) in case of wide connection
@@ -643,6 +671,8 @@ void ObjectManager::placeObject(rmg::Object & object, bool guarded, bool updateD
 				if (manager)
 				{
 					manager->updateDistances(object);
+					if (manager != this)
+						manager->addFootprint(object);
 				}
 			}
 		}
@@ -653,7 +683,7 @@ void ObjectManager::placeObject(rmg::Object & object, bool guarded, bool updateD
 	{
 		if (instance->object().isVisitable())
 		{
-			objectsVisitableArea.add(instance->getVisitablePosition());
+			objectsVisitableArea.unite(instance->getVisitableArea());
 		}
 		objects.push_back(&instance->object());
 		if(auto * rp = zone.getModificator<RoadPlacer>())

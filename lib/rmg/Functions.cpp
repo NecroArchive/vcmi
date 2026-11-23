@@ -11,6 +11,7 @@
 #include "StdInc.h"
 #include "Functions.h"
 #include "CMapGenerator.h"
+#include "ObjectInfo.h"
 #include "RmgMap.h"
 #include "TileInfo.h"
 #include "RmgPath.h"
@@ -116,4 +117,26 @@ ui32 getRandomDwellingValue(RmgMap & map, FactionID faction, int level)
 		return 0;
 
 	return getNativeDwellingValue(map, creature);
+}
+
+bool footprintKeepsDistance(const rmg::Area & footprint, const rmg::Area & placed, float minDistance)
+{
+	if(placed.empty())
+		return true;
+
+	return std::ranges::all_of(footprint.getTilesVector(), [&placed, minDistance](const int3 & tile)
+	{
+		return static_cast<float>(placed.distanceSqr(tile)) >= minDistance;
+	});
+}
+
+bool canJoinTreasurePile(const ObjectInfo & candidate, const std::vector<ObjectInfo *> & pile)
+{
+	if(candidate.isStandalone() && !pile.empty())
+		return false;
+
+	return std::ranges::none_of(pile, [](const ObjectInfo * existing)
+	{
+		return existing->isStandalone();
+	});
 }

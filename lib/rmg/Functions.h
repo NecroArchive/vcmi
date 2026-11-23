@@ -18,6 +18,7 @@ class ObjectManager;
 class ObjectTemplate;
 class CMapGenerator;
 class CCreature;
+struct ObjectInfo;
 
 class rmgException : public std::exception
 {
@@ -50,3 +51,9 @@ const CCreature * getRandomDwellingCreature(FactionID faction, int level);
 
 /// Value of a random dwelling of given level (0-based) that becomes a dwelling of given faction, 0 if it can't be determined
 ui32 getRandomDwellingValue(RmgMap & map, FactionID faction, int level);
+
+/// Whether candidate can be added to an existing treasure pile
+bool canJoinTreasurePile(const ObjectInfo & candidate, const std::vector<ObjectInfo *> & pile);
+
+/// Whether every tile of footprint is at least minDistance (squared tile distance, as in the RMG distance map) away from placed
+bool footprintKeepsDistance(const rmg::Area & footprint, const rmg::Area & placed, float minDistance);
