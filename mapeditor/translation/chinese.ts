@@ -471,22 +471,22 @@
     <message>
         <location filename="../mainwindow.ui" line="349"/>
         <source>Search</source>
-        <translation type="unfinished"></translation>
+        <translation>搜索</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="359"/>
         <source>Smaller icons</source>
-        <translation type="unfinished"></translation>
+        <translation>小图标</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="366"/>
         <source>Larger icons</source>
-        <translation type="unfinished"></translation>
+        <translation>大图标</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="373"/>
         <source>Show as list</source>
-        <translation type="unfinished"></translation>
+        <translation>列表展示</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="411"/>
