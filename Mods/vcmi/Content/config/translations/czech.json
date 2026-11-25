@@ -1,5 +1,6 @@
 {
 	"artifact.core.orbOfVulnerability.bonus.noResistance": "{Koule zranitelnosti}\nRuší přirozenou magickou odolnost všech bytostí na bojišti.",
+	"artifact.core.spellScroll.spellName.default": "neidentifikováno",
 	"core.bonus.ADDITIONAL_ATTACK.description": "{Další útoky}\nTato jednotka může zaútočit ještě ${val}x.",
 	"core.bonus.ADDITIONAL_RETALIATION.description": "{Další odvety}\nTato jednotka může provést ještě ${val} odvet(y).",
 	"core.bonus.ADJACENT_SPELLCASTER.description": "{Kouzlení zblízka}\nTato jednotka může seslat ${subtype.spell}, pokud stojí vedle cíle.",
@@ -339,6 +340,8 @@
 	"vcmi.adventureOptions.mapScrollSpeed5.hover": "Nastavit posouvání mapy na velmi rychlé.",
 	"vcmi.adventureOptions.mapScrollSpeed6.help": "Nastavit posouvání mapy na okamžité",
 	"vcmi.adventureOptions.mapScrollSpeed6.hover": "Nastavit posouvání mapy na okamžité",
+	"vcmi.adventureOptions.minimapShowIcons.help": "{Ikony na minimapě}\n\nZobrazí ikony všech hrdinů a měst viditelných na minimapě, aby byli lépe rozpoznatelní na velkých mapách.",
+	"vcmi.adventureOptions.minimapShowIcons.hover": "Zobrazit ikony na minimapě",
 	"vcmi.adventureOptions.numericQuantities.help": "{Číselné množství jednotek}\n\nZobrazit přibližné množství nepřátelských jednotek ve formátu A-B.",
 	"vcmi.adventureOptions.numericQuantities.hover": "Číselné množství jednotek",
 	"vcmi.adventureOptions.replayShowBattles.help": "{Zobrazovat bitvy v záznamech}\n\nKaždá bitva, která proběhla během přehrávaného tahu, se zobrazí na obrazovce. Pokud je tato možnost vypnutá, bitvy budou přeskočeny.",
